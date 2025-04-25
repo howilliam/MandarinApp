@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Button, StyleSheet, Alert} from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert, useColorScheme} from 'react-native';
 import { useState } from 'react';
 import { router } from 'expo-router';
 
@@ -6,6 +6,8 @@ import { router } from 'expo-router';
 export default function LoginScreen() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const theme = useColorScheme();
+    const isDark = theme === 'dark';
 
     const handleLogin = () => {
         // TODO: Replace with real auth logic (Firebase, Supabase, etc.)
@@ -18,18 +20,20 @@ export default function LoginScreen() {
     };
     
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Log In</Text>
+    <View style={[styles.container, { backgroundColor: isDark ? '#000' : '#fff' }]}>
+      <Text style={[styles.title, {color: isDark ? '#fff' : '#000'}]}>Log In</Text>
       <TextInput 
         placeholder="Email" 
-        style={styles.input}
+        placeholderTextColor={isDark ? '#aaa' : '#666'}
+        style={[styles.input, { color: isDark ? '#fff' : '#000', borderColor: isDark ? '#555' : '#ccc' }]}
         value={email}
         onChangeText={setEmail}
         />
       <TextInput 
         placeholder="Password" 
-        secureTextEntry 
-        style={styles.input}
+        placeholderTextColor={isDark ? '#aaa' : '#666'}
+        secureTextEntry
+        style={[styles.input, { color: isDark ? '#fff' : '#000', borderColor: isDark ? '#555' : '#ccc' }]}
         value={password}
         onChangeText={setPassword}
          />
@@ -40,7 +44,7 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', padding: 24 },
-  title: { fontSize: 24, marginBottom: 16 },
+  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 16 },
   input: {
     borderColor: '#ccc',
     borderWidth: 1,
